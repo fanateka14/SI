@@ -102,3 +102,8 @@ $router->post('/updateTicket', ['\app\controllers\TicketController', 'updateTick
 $router->get('/fana_stats_pdf', ['\app\controllers\FanaController', 'exportStatsPdf']);
 $router->get('/fana_comparaison_ticket_pdf', ['\app\controllers\FanaController', 'exportComparaisonTicketPdf']);
 
+$ticketReviewController = new \app\controllers\TicketReviewController();
+$router->get('/ticketreview', [$ticketReviewController, 'listClosedTickets']);
+$router->get('/ticketreview-avis/@id', [$ticketReviewController, 'showReviewForm']);
+$router->post('/ticketreview-save', [$ticketReviewController, 'saveReview']);
+$router->get('/ticketreview-list', [$ticketReviewController, 'listAllReviews']);
