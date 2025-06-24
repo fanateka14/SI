@@ -6,8 +6,8 @@
             <label for="nb_etoile">Note :</label>
             <select name="nb_etoile" id="nb_etoile" required>
                 <option value="">Choisir...</option>
-                <?php for ($i=1; $i<=5; $i++): ?>
-                    <option value="<?= $i ?>"><?= $i ?> étoile<?= $i>1?'s':'' ?></option>
+                <?php for ($i = 1; $i <= 5; $i++): ?>
+                    <option value="<?= $i ?>"><?= $i ?> étoile<?= $i > 1 ? 's' : '' ?></option>
                 <?php endfor; ?>
             </select>
         </div>
@@ -22,7 +22,7 @@
         <?php foreach ($reviews as $r): ?>
             <li class="list-group-item">
                 <span style="color: #f1c40f; font-size: 1.2em;">
-                    <?php for ($i=0; $i<$r['nb_etoile']; $i++) echo '★'; ?><?php for ($i=$r['nb_etoile']; $i<5; $i++) echo '☆'; ?>
+                    <?php for ($i = 0; $i < $r['nb_etoile']; $i++) echo '★'; ?><?php for ($i = $r['nb_etoile']; $i < 5; $i++) echo '☆'; ?>
                 </span>
                 <strong><?= htmlspecialchars($r['commentaire']) ?></strong>
                 <span class="text-muted" style="font-size:0.9em;">(<?= $r['date_avis'] ?>)</span>

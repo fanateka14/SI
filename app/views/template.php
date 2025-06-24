@@ -23,59 +23,42 @@
 
 <body>
     <div class="navbar">
-        <<<<<<< HEAD
-            <!-- <a href="#"><i class="fas fa-home"></i>Accueil</a> -->
-            <?php
-            if ($_SESSION['idDept'] == 1) { ?>
-                <a href="validation"><i class="fas fa-check-circle"></i>Validation</a>
-                <a href="validationCrm"><i class="fas fa-check-circle"></i>Validation CRM</a>
-            <?php }
-            ?>
-            <?php
-            if ($_SESSION['idDept'] == 1 || $_SESSION['idDept'] == 6) { ?>
-                <a href="tri"><i class="fas fa-wallet"></i>Rechercher Client</a>
 
-            <?php }
-            ?>
-            <a href="ajouterDiscussion"><i class="fas fa-comments"></i>Ajouter Discussion</a>
-            <a href="budget"><i class="fas fa-wallet"></i>Budget</a>
-            <a href="#"><i class="fas fa-building"></i>Departement</a>
-            <a href="crm"><i class="fas fa-handshake"></i>CRM</a>
-            <a href="chart"><i class="fas fa-building"></i>Chart</a>
-            <a href="deco"><i class="fas fa-sign-out-alt"></i>Deconnexion</a>
-            <a href="ajoutTicket"><i class="fas fa-plus"></i>ajoutTicket</a>
-            <a href="listeTicket"><i class="fas fa-building"></i>Voir liste ticket</a>
+        <!-- <a href="#"><i class="fas fa-home"></i>Accueil</a> -->
+        <?php
+        if ($_SESSION['idDept'] == 1) { ?>
+            <a href="validation"><i class="fas fa-check-circle"></i>Validation</a>
+            <a href="validationCrm"><i class="fas fa-check-circle"></i>Validation CRM</a>
+        <?php }
+        ?>
+        <?php
+        if ($_SESSION['idDept'] == 1 || $_SESSION['idDept'] == 7) { ?>
+            <a href="tri"><i class="fas fa-wallet"></i>Rechercher Client</a>
+
+        <?php }
+        ?>
+        <a href="ajouterDiscussion"><i class="fas fa-comments"></i>Ajouter Discussion</a>
+        <a href="budget"><i class="fas fa-wallet"></i>Budget</a>
+        <a href="#"><i class="fas fa-building"></i>Departement</a>
+        <a href="crm"><i class="fas fa-handshake"></i>CRM</a>
+        <a href="chart"><i class="fas fa-building"></i>Chart</a>
+        <a href="deco"><i class="fas fa-sign-out-alt"></i>Deconnexion</a>
+        <a href="ajoutTicket"><i class="fas fa-plus"></i>ajoutTicket</a>
+        <a href="listeTicket"><i class="fas fa-building"></i>Voir liste ticket</a>
+        <?php if ($_SESSION['idDept'] == 7) { ?>
             <a href="ticketreview"><i class="fas fa-star-half-alt"></i>Tickets fermés à noter</a>
-            <a href="ticketreview-list"><i class="fas fa-star"></i>Liste des avis tickets</a>
-            <a href="stats"><i class="fas fa-chart-bar"></i> Statistiques</a>
-            <a href="comparaison-ticket"><i class="fas fa-balance-scale"></i> Comparaison Ticket</a>
+        <?php } ?>
+        <a href="ticketreview-list"><i class="fas fa-star"></i>Liste des avis tickets</a>
+        <?php if ($_SESSION['idDept'] == 1) { ?>
+        <a href="stats"><i class="fas fa-chart-bar"></i> Statistiques</a>
+         <?php } ?>
+         <?php if ($_SESSION['idDept'] == 1) { ?>
+        <a href="comparaison-ticket"><i class="fas fa-balance-scale"></i> Comparaison Ticket</a>
+         <?php } ?>
 
 
-            =======
-            <?php if ($_SESSION['idDept'] == 7): ?>
-                <a href="deco"><i class="fas fa-sign-out-alt"></i>Deconnexion</a>
-                <a href="ajouterDiscussion"><i class="fas fa-comments"></i>Ajouter Discussion</a>
-                >>>>>>> 6fa4e092c86363bb4308f137be6f4bcdb5bae96a
 
-            <?php else: ?>
-                <?php if ($_SESSION['idDept'] == 1): ?>
-                    <a href="validation"><i class="fas fa-check-circle"></i>Validation</a>
-                    <a href="validationCrm"><i class="fas fa-check-circle"></i>Validation CRM</a>
-                <?php endif; ?>
-                <?php if ($_SESSION['idDept'] == 1 || $_SESSION['idDept'] == 6): ?>
-                    <a href="tri"><i class="fas fa-wallet"></i>Rechercher Client</a>
-                <?php endif; ?>
-                <a href="ajouterDiscussion"><i class="fas fa-comments"></i>Ajouter Discussion</a>
-                <a href="budget"><i class="fas fa-wallet"></i>Budget</a>
-                <a href="#"><i class="fas fa-building"></i>Departement</a>
-                <a href="crm"><i class="fas fa-handshake"></i>CRM</a>
-                <a href="chart"><i class="fas fa-building"></i>Chart</a>
-                <a href="ajoutTicket"><i class="fas fa-plus"></i>ajoutTicket</a>
-                <a href="listeTicket"><i class="fas fa-building"></i>Voir liste ticket</a>
-                <a href="stats"><i class="fas fa-chart-bar"></i>Statistiques</a>
-                <a href="comparaison-ticket"><i class="fas fa-balance-scale"></i>Comparaison Ticket</a>
-                <a href="deco"><i class="fas fa-sign-out-alt"></i>Deconnexion</a>
-            <?php endif; ?>
+
     </div>
 
     <main>
