@@ -21,6 +21,7 @@
             <th>Voir tickets</th>
         </tr>
         <?php foreach ($stats as $data): ?>
+            
             <tr>
                 <td><?= htmlspecialchars($data['client_name']) ?></td>
                 <td><?= $data['nb_tickets'] ?></td>

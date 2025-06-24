@@ -39,4 +39,22 @@ class LuberriModel {
         $stmt = $db->prepare("UPDATE discussion SET reponse = ? WHERE id = ?");
         return $stmt->execute([$reponse, $discussionId]);
     }
+    public function getDiscussionsByTierAndDate($idTier, $dateDebut = null, $dateFin = null) {
+        $db = \Flight::db();
+        $sql = "SELECT * FROM discussion WHERE idTier = ?";
+        $params = [$idTier];
+
+        if ($dateDebut) {
+            $sql .= " AND dateHeure >= ?";
+            $params[] = $dateDebut . " 00:00:00";
+        }
+        if ($dateFin) {
+            $sql .= " AND dateHeure <= ?";
+            $params[] = $dateFin . " 23:59:59";
+        }
+        $sql .= " ORDER BY dateHeure DESC";
+        $stmt = $db->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
 }

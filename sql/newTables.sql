@@ -7,11 +7,6 @@ CREATE TABLE assignation_ticket (
 );
 
 
-INSERT INTO assignation_ticket (idTicket, montantPrevu, duree, dureeReel) VALUES
-(1, 10000, 2, 2.5),
-(2, 8000, 1, 1),
-(3, 12000, 3, 2.8);
-
 
 -- Table pour les avis sur les tickets (commentaire + note étoile)
 
@@ -24,6 +19,4 @@ CREATE TABLE IF NOT EXISTS ticket_review (
     date_avis DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_ticket) REFERENCES Ticket(idTicket)
 );
-
--- Pour insérer des exemples :
--- INSERT INTO ticket_review (id_ticket, commentaire, nb_etoile) VALUES (1, 'Très bon support', 5);
+INSERT INTO Dept (nomDept, mdp, budget) VALUES ('client', '1234', 0.00);

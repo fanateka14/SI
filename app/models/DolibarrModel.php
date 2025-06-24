@@ -8,11 +8,15 @@
  
 class DolibarrModel {
 
-        private $apiUrl = 'http://localhost/dolibarr-21.0.1/dolibarr-21.0.1/htdocs/api/index.php';
-    private $apiKey = '0faa8810426f7a73478550268bd2c317a56a50da';
+    //     private $apiUrl = 'http://localhost/dolibarr-21.0.1/dolibarr-21.0.1/htdocs/api/index.php';
+    // private $apiKey = '0faa8810426f7a73478550268bd2c317a56a50da';
+    private $apiUrl = 'http://localhost/dolibarr-21.0.1/htdocs/api/index.php';
+    private $apiKey = '77db0a73baace16da2e826df8c9c3f630c3f7d40';
+
     // private $apiUrl = 'http://localhost/dolibarr-21.0.1/htdocs/api/index.php';
     // private $apiKey = '77db0a73baace16da2e826df8c9c3f630c3f7d40';
-
+    // private $apiUrl = 'http://localhost/dolibarr-21.0.1/htdocs/api/index.php';
+    // private $apiKey = '13f7ffe9a4eae75d93d2290eeb5bedcca0c19687';
 
 
     //  private function makeRequest($endpoint)
@@ -178,6 +182,8 @@ public function createTicket($data)
         'message'     => $data['message'],
         'fk_soc'      => $data['tiers'],
         'fk_user_assign' => $data['assigne'],
+        'status'      => 1, // Statut ouvert
+
     ];
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_HTTPHEADER, [

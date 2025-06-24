@@ -261,13 +261,16 @@ foreach ($tickets as $ticket) {
         <td><?= $ticket['message'] ?></td>
         <td><?= date('Y-m-d H:i:s', $ticket['date_creation']) ?></td>
         <td>
-            <select name="statut">
+            <select name="statut" onchange="toggleDureeReelle(this, <?= $ticket['id'] ?>)">
                 <option value="0" <?= $ticket['fk_statut'] == 0 ? 'selected' : '' ?>>Brouillon</option>
                 <option value="1" <?= $ticket['fk_statut'] == 1 ? 'selected' : '' ?>>Ouvert</option>
                 <option value="2" <?= $ticket['fk_statut'] == 2 ? 'selected' : '' ?>>En cours de traitement</option>
                 <option value="3" <?= $ticket['fk_statut'] == 3 ? 'selected' : '' ?>>Fermé (ou Résolu)</option>
                 <option value="-1" <?= $ticket['fk_statut'] == -1 ? 'selected' : '' ?>>Annulé</option>
             </select>
+            <div id="duree-reelle-<?= $ticket['id'] ?>" style="display:none; margin-top:5px;">
+                <input type="number" step="0.01" name="dureeReelle" placeholder="Durée réelle (h)">
+            </div>
         </td>
         <td>
             <select name="priorite">
@@ -312,6 +315,14 @@ function showEditForm(id) {
 function hideEditForm(id) {
     document.getElementById('edit-row-' + id).style.display = 'none';
     document.getElementById('display-row-' + id).style.display = '';
+}
+function toggleDureeReelle(selectElement, ticketId) {
+    var dureeReelleDiv = document.getElementById('duree-reelle-' + ticketId);
+    if (selectElement.value == 3) { // Si le statut est "Fermé (ou Résolu)"
+        dureeReelleDiv.style.display = 'block';
+    } else {
+        dureeReelleDiv.style.display = 'none';
+    }
 }
 </script>
 

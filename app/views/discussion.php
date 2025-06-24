@@ -109,6 +109,14 @@
     </form>
 
     <h2>Liste des discussions</h2>
+    <form method="get" class="discussion-form" style="margin-bottom:24px;">
+        <div class="jjj">
+
+            <input type="date" name="dateDebut" id="dateDebut" style="width: 45%;" value="<?= htmlspecialchars($_GET['dateDebut'] ?? '') ?>"> -
+            <input type="date" name="dateFin" id="dateFin" style="width: 45%;" value="<?= htmlspecialchars($_GET['dateFin'] ?? '') ?>">
+        </div>
+        <button type="submit">Filtrer</button>
+    </form>
     <table class="discussion-table">
         <thead>
             <tr>
@@ -128,7 +136,7 @@
                         <td><?= htmlspecialchars($discussion['message'] ?? '') ?></td>
                         <td>
                             <?= htmlspecialchars($discussion['reponse'] ?? '') ?>
-                            <?php if (empty($discussion['reponse'])): ?>
+                            <?php if (empty($discussion['reponse']) && $_SESSION['idDept'] != 7): ?>
                                 <button type="button" onclick="toggleReponseForm(<?= $discussion['id'] ?>)">Répondre</button>
                                 <form method="post" action="" style="display:none;margin-top:8px;" id="reponse-form-<?= $discussion['id'] ?>">
                                     <input type="hidden" name="discussion_id" value="<?= $discussion['id'] ?>">

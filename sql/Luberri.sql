@@ -5,3 +5,10 @@ CREATE TABLE discussion (
     reponse TEXT,
     dateHeure DATETIME DEFAULT CURRENT_TIMESTAMP
 );
+CREATE TABLE Service (
+    idService INT PRIMARY KEY AUTO_INCREMENT,
+    idTicket INT,
+    note INT,
+    commentaire VARCHAR(255),
+    FOREIGN KEY (idTicket) REFERENCES Ticket(idTicket)
+);

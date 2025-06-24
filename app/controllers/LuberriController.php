@@ -30,8 +30,6 @@ class LuberriController {
         $model = new \app\models\LuberriModel();
 
         $idTier = null;
-
-        // Gestion de l'ajout de discussion
         if (Flight::request()->method == 'POST') {
             // Réponse à une discussion existante
             if (isset(Flight::request()->data->submit_reponse)) {
@@ -56,15 +54,25 @@ class LuberriController {
             }
         }
 
+        // Récupération des filtres de date
+        $dateDebut = Flight::request()->query->dateDebut ?? null;
+        $dateFin = Flight::request()->query->dateFin ?? null;
+
         if (!$idTier && !empty($tiers)) {
             $idTier = $tiers[0]['id'];
         }
-        $discussions = $idTier ? $model->getDiscussionsByTier($idTier) : [];
+        $discussions = $model->getDiscussionsByTierAndDate($idTier, $dateDebut, $dateFin);
+
+        $tiersById = [];
+        foreach ($tiers as $tier) {
+            $tiersById[$tier['id']] = $tier['name'] ?? $tier['nom'] ?? $tier['label'] ?? 'Tiers';
+        }
 
         Flight::render('template', [
             'page' => 'discussion',
             'tiers' => $tiers,
-            'discussions' => $discussions
+            'discussions' => $discussions,
+            'tiersById' => $tiersById
         ]);
     }
 }
