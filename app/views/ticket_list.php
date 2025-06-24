@@ -19,6 +19,20 @@ function getClientName($fk_soc, $tiers) {
     return $fk_soc;
 }
 ?>
+<?php
+// Filtrage avancé côté PHP
+$ticketsFiltered = [];
+foreach ($tickets as $ticket) {
+    if (
+        (empty($_GET['client']) || $ticket['fk_soc'] == $_GET['client']) &&
+        (empty($_GET['statut']) || $ticket['fk_statut'] == $_GET['statut']) &&
+        (empty($_GET['priorite']) || $ticket['severity_code'] == $_GET['priorite']) &&
+        (empty($_GET['agent']) || $ticket['fk_user_assign'] == $_GET['agent'])
+    ) {
+        $ticketsFiltered[] = $ticket;
+    }
+}
+?>
 <style>
     .navigationTable {
     display: flex;
@@ -134,6 +148,50 @@ function getClientName($fk_soc, $tiers) {
 
 <h1>Liste des tickets</h1>
 
+<form method="get" class="navigationTable" style="margin-bottom:20px;">
+    <div>
+        <label>Client :</label>
+        <select name="client">
+            <option value="">Tous</option>
+            <?php foreach ($tiers as $tier): ?>
+                <option value="<?= $tier['id'] ?>" <?= isset($_GET['client']) && $_GET['client'] == $tier['id'] ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($tier['name'] ?? $tier['nom'] ?? $tier['lastname'] ?? $tier['login'] ?? $tier['id']) ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+
+        <label>Statut :</label>
+        <select name="statut">
+            <option value="">Tous</option>
+            <option value="0" <?= (isset($_GET['statut']) && $_GET['statut'] === "0") ? 'selected' : '' ?>>Brouillon</option>
+            <option value="1" <?= (isset($_GET['statut']) && $_GET['statut'] === "1") ? 'selected' : '' ?>>Ouvert</option>
+            <option value="2" <?= (isset($_GET['statut']) && $_GET['statut'] === "2") ? 'selected' : '' ?>>En cours de traitement</option>
+            <option value="3" <?= (isset($_GET['statut']) && $_GET['statut'] === "3") ? 'selected' : '' ?>>Fermé (ou Résolu)</option>
+            <option value="-1" <?= (isset($_GET['statut']) && $_GET['statut'] === "-1") ? 'selected' : '' ?>>Annulé</option>
+        </select>
+
+        <label>Priorité :</label>
+        <select name="priorite">
+            <option value="">Toutes</option>
+            <option value="1" <?= (isset($_GET['priorite']) && $_GET['priorite'] === "1") ? 'selected' : '' ?>>Basse</option>
+            <option value="2" <?= (isset($_GET['priorite']) && $_GET['priorite'] === "2") ? 'selected' : '' ?>>Moyenne</option>
+            <option value="3" <?= (isset($_GET['priorite']) && $_GET['priorite'] === "3") ? 'selected' : '' ?>>Haute</option>
+        </select>
+
+        <label>Agent :</label>
+        <select name="agent">
+            <option value="">Tous</option>
+            <?php foreach ($agents as $agent): ?>
+                <option value="<?= $agent['id'] ?>" <?= isset($_GET['agent']) && $_GET['agent'] == $agent['id'] ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($agent['lastname'] ?? $agent['login'] ?? 'Agent') ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+
+        <button type="submit">Filtrer</button>
+    </div>
+</form>
+
 
 
 
@@ -155,7 +213,7 @@ function getClientName($fk_soc, $tiers) {
         </tr>
         </thead>
         <tbody>
-<?php foreach ($tickets as $ticket): ?>
+<?php foreach ($ticketsFiltered as $ticket): ?>
     <!-- Affichage normal -->
     <tr id="display-row-<?= $ticket['id'] ?>">
         <td><?= getClientName($ticket['fk_soc'], $tiers)?></td>
@@ -256,3 +314,4 @@ function hideEditForm(id) {
     document.getElementById('display-row-' + id).style.display = '';
 }
 </script>
+
