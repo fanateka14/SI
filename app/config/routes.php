@@ -100,3 +100,9 @@ Flight::route('/stats', [\app\controllers\FanaController::class, 'statistiques']
 Flight::route('/comparaison-ticket', [\app\controllers\FanaController::class, 'comparaisonDepenseTicket']);
 $router->post('/updateTicket', ['\app\controllers\TicketController', 'updateTicket']);
 
+$ticketReviewController = new \app\controllers\TicketReviewController();
+$router->get('/ticketreview', [$ticketReviewController, 'listClosedTickets']);
+$router->get('/ticketreview-avis/@id', [$ticketReviewController, 'showReviewForm']);
+$router->post('/ticketreview-save', [$ticketReviewController, 'saveReview']);
+$router->get('/ticketreview-list', [$ticketReviewController, 'listAllReviews']);
+

@@ -47,6 +47,8 @@
         <a href="deco"><i class="fas fa-sign-out-alt"></i>Deconnexion</a>
         <a href="ajoutTicket"><i class="fas fa-plus"></i>ajoutTicket</a>
         <a href="listeTicket"><i class="fas fa-building"></i>Voir liste ticket</a>
+        <a href="ticketreview"><i class="fas fa-star-half-alt"></i>Tickets fermés à noter</a>
+        <a href="ticketreview-list"><i class="fas fa-star"></i>Liste des avis tickets</a>
         <a href="stats"><i class="fas fa-chart-bar"></i> Statistiques</a>
         <a href="comparaison-ticket"><i class="fas fa-balance-scale"></i> Comparaison Ticket</a>
 
