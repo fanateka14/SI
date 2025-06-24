@@ -54,6 +54,11 @@ class DolibarrModel {
     public function putUsers(){
 
     }
+    public function getAgent()
+    {
+        // Récupère tous les utilisateurs (agents) depuis Dolibarr
+        return $this->makeRequest('users');
+    }
     public function getTickets(){
         return $this-> makerequest('tickets');
     }

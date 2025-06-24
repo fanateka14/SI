@@ -1,4 +1,17 @@
 
+<?php
+
+function getStatutLabel($code) {
+    switch ($code) {
+        case 0: return 'Brouillon';
+        case 1: return 'Ouvert';
+        case 2: return 'En cours de traitement';
+        case 3: return 'Fermé (ou Résolu)';
+        case -1: return 'Annulé';
+        default: return 'Inconnu';
+    }
+}
+?>
 <style>
     .navigationTable {
     display: flex;
@@ -103,19 +116,27 @@
         <tbody>
             <?php foreach ($tickets as $ticket): ?>
                 <tr>
-                    <td><?= htmlspecialchars($ticket['fk_user_assign_string']) ?></td>
-                <td><?= htmlspecialchars($ticket['type_label']) ?></td>
-                <td><?= htmlspecialchars($ticket['message']) ?></td>
-                <td><?= htmlspecialchars($ticket['date_creation']) ?></td>
+                    
+               
+                <td><?= $ticket['fk_soc'] ?></td>
+                <td><?= $ticket['type_label'] ?></td>
+                <td><?= $ticket['message'] ?></td>
+                <td><?= $ticket['date_creation'] ?></td>
                 
-                <td><?= htmlspecialchars($ticket['fk_statut']) ?></td>
-                <td><?= htmlspecialchars($ticket['severity_code']) ?></td>
+                <td><?= getStatutLabel($ticket['fk_statut']) ?></td>
+                <td><?= $ticket['severity_code'] ?></td>
                  <td>
-                        <select name="agent_assign_<?= htmlspecialchars($ticket['fk_user_assign_string']) ?>">
-                            <option value="">-- Choisir un agent --</option>
+                        <select name="agent_assign_<?= $ticket['fk_user_assign_string'] ?>">
+                            <!-- <option value="">-- Choisir un agent --</option>
                             <option value="agent1">Agent 1</option>
                             <option value="agent2">Agent 2</option>
-                            <option value="agent3">Agent 3</option>
+                            <option value="agent3">Agent 3</option> -->
+                             <option value="">-- Choisir un agent --</option>
+                            <?php foreach ($agents as $agent): ?>
+                                <option value="<?= $agent['id'] ?>">
+                                    <?= $agent['lastname'] ?? $agent['login'] ?? 'Agent' ?>
+                                </option>
+                            <?php endforeach; ?>
                         </select>
                     </td>
                 </tr>
