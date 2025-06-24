@@ -119,7 +119,7 @@ function getStatutLabel($code) {
                     
                
                 <td><?= $ticket['fk_soc'] ?></td>
-                <td><?= $ticket['type_label'] ?></td>
+                <td><?= $ticket['subject'] ?></td>
                 <td><?= $ticket['message'] ?></td>
                 <td><?= $ticket['date_creation'] ?></td>
                 
