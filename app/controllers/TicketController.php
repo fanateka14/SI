@@ -60,12 +60,19 @@ class TicketController {
         }
     }
 
-    public function listeTickets() {
+     public function listeTickets() {
         $ticket = new \app\models\DolibarrModel();
         $tickets = $ticket->getTickets(); // récupère tous les tickets
+        $agents = $ticket->getAgent(); 
+            $tiers = $ticket->getTiers(); // Liste des clients/tiers Dolibarr
+
+        // récupère tous les tickets
         Flight::render('template', [
             'tickets' => $tickets,
+            'agents' => $agents,
+            'tiers' => $tiers,
             'page' => 'ticket_list'
+
         ]);
     }
 }

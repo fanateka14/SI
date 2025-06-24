@@ -11,6 +11,14 @@ function getStatutLabel($code) {
         default: return 'Inconnu';
     }
 }
+function getClientName($fk_soc, $tiers) {
+    foreach ($tiers as $tier) {
+        if ($tier['id'] == $fk_soc) {
+            return $tier['name'] ?? $tier['nom'] ?? $tier['lastname'] ?? $tier['login'] ?? $fk_soc;
+        }
+    }
+    return $fk_soc;
+}
 ?>
 <style>
     .navigationTable {
@@ -118,7 +126,7 @@ function getStatutLabel($code) {
                 <tr>
                     
                
-                <td><?= $ticket['fk_soc'] ?></td>
+                <td><?= getClientName($ticket['fk_soc'], $tiers)?></td>
                 <td><?= $ticket['subject'] ?></td>
                 <td><?= $ticket['message'] ?></td>
                 <td><?= $ticket['date_creation'] ?></td>
