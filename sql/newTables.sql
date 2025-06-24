@@ -16,7 +16,6 @@ CREATE TABLE IF NOT EXISTS ticket_review (
     id_ticket INT NOT NULL,
     commentaire TEXT,
     nb_etoile INT CHECK (nb_etoile BETWEEN 1 AND 5),
-    date_avis DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_ticket) REFERENCES Ticket(idTicket)
+    date_avis DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 INSERT INTO Dept (nomDept, mdp, budget) VALUES ('client', '1234', 0.00);
