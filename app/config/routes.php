@@ -88,3 +88,6 @@ Flight::route('/api/ventes-par-mois', function() use ($StatController) {
 
 Flight::route('GET|POST /ajoutTicket', ['\app\controllers\TicketController','ajoutTicket']);
 Flight::route('GET|POST /listeTicket ', ['\app\controllers\TicketController','listeTickets']);
+
+// Ajoute une route pour les stats Fana
+Flight::route('/fana/stats', [\app\controllers\FanaController::class, 'statistiques']);
