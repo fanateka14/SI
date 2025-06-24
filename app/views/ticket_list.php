@@ -1,4 +1,3 @@
-
 <?php
 
 function getStatutLabel($code) {
@@ -10,6 +9,14 @@ function getStatutLabel($code) {
         case -1: return 'Annulé';
         default: return 'Inconnu';
     }
+}
+function getClientName($fk_soc, $tiers) {
+    foreach ($tiers as $tier) {
+        if ($tier['id'] == $fk_soc) {
+            return $tier['name'] ?? $tier['nom'] ?? $tier['lastname'] ?? $tier['login'] ?? $fk_soc;
+        }
+    }
+    return $fk_soc;
 }
 ?>
 <style>
@@ -92,6 +99,37 @@ function getStatutLabel($code) {
 .ticketList tr:nth-child(even) {
     background: #f6f6fa;
 }
+
+.edit-btn, .save-btn, .cancel-btn {
+    padding: 6px 12px;
+    border-radius: 5px;
+    border: none;
+    margin: 2px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background 0.2s;
+}
+.edit-btn {
+    background: #f1c40f;
+    color: #fff;
+}
+.edit-btn:hover {
+    background: #d4ac0d;
+}
+.save-btn {
+    background: #27ae60;
+    color: #fff;
+}
+.save-btn:hover {
+    background: #219150;
+}
+.cancel-btn {
+    background: #e74c3c;
+    color: #fff;
+}
+.cancel-btn:hover {
+    background: #c0392b;
+}
 </style>
 
 <h1>Liste des tickets</h1>
@@ -111,36 +149,96 @@ function getStatutLabel($code) {
 
             <th>Priorité</th>
             <th>Affecter a un agent</th>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>
-            <?php foreach ($tickets as $ticket): ?>
-                <tr>
-                    
-               
-                <td><?= $ticket['fk_soc'] ?></td>
-                <td><?= $ticket['type_label'] ?></td>
-                <td><?= $ticket['message'] ?></td>
-                <td><?= $ticket['date_creation'] ?></td>
-                
-                <td><?= getStatutLabel($ticket['fk_statut']) ?></td>
-                <td><?= $ticket['severity_code'] ?></td>
-                 <td>
-                        <select name="agent_assign_<?= $ticket['fk_user_assign_string'] ?>">
-                            <!-- <option value="">-- Choisir un agent --</option>
-                            <option value="agent1">Agent 1</option>
-                            <option value="agent2">Agent 2</option>
-                            <option value="agent3">Agent 3</option> -->
-                             <option value="">-- Choisir un agent --</option>
-                            <?php foreach ($agents as $agent): ?>
-                                <option value="<?= $agent['id'] ?>">
-                                    <?= $agent['lastname'] ?? $agent['login'] ?? 'Agent' ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
+<?php foreach ($tickets as $ticket): ?>
+    <!-- Affichage normal -->
+    <tr id="display-row-<?= $ticket['id'] ?>">
+        <td><?= getClientName($ticket['fk_soc'], $tiers)?></td>
+        <td><?= $ticket['subject'] ?></td>
+        <td><?= $ticket['message'] ?></td>
+        <td><?= date('Y-m-d H:i:s', $ticket['date_creation']) ?></td>
+        <td><?= getStatutLabel($ticket['fk_statut']) ?></td>
+        <td>
+            <?php
+                $prioriteLabel = 'Basse';
+                if ($ticket['severity_code'] == 2) $prioriteLabel = 'Moyenne';
+                if ($ticket['severity_code'] == 3) $prioriteLabel = 'Haute';
+                echo $prioriteLabel;
+            ?>
+        </td>
+        <td>
+            <?php
+                $agentNom = '';
+                foreach ($agents as $agent) {
+                    if ($ticket['fk_user_assign'] == $agent['id']) {
+                        $agentNom = $agent['lastname'] ?? $agent['login'] ?? 'Agent';
+                        break;
+                    }
+                }
+                echo $agentNom ?: 'Non assigné';
+            ?>
+        </td>
+        <td>
+            <button class="edit-btn" type="button" onclick="showEditForm(<?= $ticket['id'] ?>)">
+                <i class="fas fa-pen"></i>
+            </button>
+        </td>
+    </tr>
+    <!-- Formulaire de modification caché -->
+    <tr id="edit-row-<?= $ticket['id'] ?>" style="display:none;">
+        <form method="post" action="updateTicket">
+        <td><?= getClientName($ticket['fk_soc'], $tiers)?></td>
+        <td><?= $ticket['subject'] ?></td>
+        <td><?= $ticket['message'] ?></td>
+        <td><?= date('Y-m-d H:i:s', $ticket['date_creation']) ?></td>
+        <td>
+            <select name="statut">
+                <option value="0" <?= $ticket['fk_statut'] == 0 ? 'selected' : '' ?>>Brouillon</option>
+                <option value="1" <?= $ticket['fk_statut'] == 1 ? 'selected' : '' ?>>Ouvert</option>
+                <option value="2" <?= $ticket['fk_statut'] == 2 ? 'selected' : '' ?>>En cours de traitement</option>
+                <option value="3" <?= $ticket['fk_statut'] == 3 ? 'selected' : '' ?>>Fermé (ou Résolu)</option>
+                <option value="-1" <?= $ticket['fk_statut'] == -1 ? 'selected' : '' ?>>Annulé</option>
+            </select>
+        </td>
+        <td>
+            <select name="priorite">
+                <option value="1" <?= $ticket['severity_code'] == 1 ? 'selected' : '' ?>>Basse</option>
+                <option value="2" <?= $ticket['severity_code'] == 2 ? 'selected' : '' ?>>Moyenne</option>
+                <option value="3" <?= $ticket['severity_code'] == 3 ? 'selected' : '' ?>>Haute</option>
+            </select>
+        </td>
+        <td>
+            <select name="agent">
+                <option value="">-- Choisir un agent --</option>
+                <?php foreach ($agents as $agent): ?>
+                    <option value="<?= $agent['id'] ?>" <?= $ticket['fk_user_assign'] == $agent['id'] ? 'selected' : '' ?>>
+                        <?= $agent['lastname'] ?? $agent['login'] ?? 'Agent' ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </td>
+        <td>
+            <input type="hidden" name="id" value="<?= $ticket['id'] ?>">
+            <button class="save-btn" type="submit">Enregistrer</button>
+            <button class="cancel-btn" type="button" onclick="hideEditForm(<?= $ticket['id'] ?>)">Annuler</button>
+        </td>
+        </form>
+    </tr>
+<?php endforeach; ?>
+</tbody>
     </table>
 </section>
+
+<script>
+function showEditForm(id) {
+    document.getElementById('edit-row-' + id).style.display = '';
+    document.getElementById('display-row-' + id).style.display = 'none';
+}
+function hideEditForm(id) {
+    document.getElementById('edit-row-' + id).style.display = 'none';
+    document.getElementById('display-row-' + id).style.display = '';
+}
+</script>

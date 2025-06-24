@@ -7,14 +7,13 @@
 
  
 class DolibarrModel {
-    private $apiUrl = 'http://localhost/dolibarr-21.0.1/htdocs/api/index.php';
+
+        private $apiUrl = 'http://localhost/dolibarr-21.0.1/dolibarr-21.0.1/htdocs/api/index.php';
+    private $apiKey = '0faa8810426f7a73478550268bd2c317a56a50da';
+    // private $apiUrl = 'http://localhost/dolibarr-21.0.1/htdocs/api/index.php';
+    // private $apiKey = '0faa8810426f7a73478550268bd2c317a56a50da';
 
 
-    
-    // private $apiKey = '13f7ffe9a4eae75d93d2290eeb5bedcca0c19687';
-
-
-    private $apiKey = '77db0a73baace16da2e826df8c9c3f630c3f7d40';
 
     //  private function makeRequest($endpoint)
     // {
@@ -59,11 +58,6 @@ class DolibarrModel {
     // }
     public function putUsers(){
 
-    }
-    public function getAgent()
-    {
-        // Récupère tous les utilisateurs (agents) depuis Dolibarr
-        return $this->makeRequest('users');
     }
     public function getTickets(){
         return $this-> makerequest('tickets');
@@ -203,6 +197,13 @@ public function getUsers()
 {
     return $this->makeRequest('users');
 }
-
+public function updateTicket($id, $data)
+{
+    return $this->makeRequest('tickets/' . $id, 'PUT', $data);
+}
+public function putTicket($id, $data)
+{
+    return $this->putRequest('tickets/' . $id, $data);
+}
 }
 ?>
