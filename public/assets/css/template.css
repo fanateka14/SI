@@ -1,0 +1,40 @@
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif; /* Police moderne et lisible */
+    line-height: 1.6; /* Amelioration de l'espacement du texte */
+    padding-top: 60px; /* Ajustement pour s'adapter a une navbar legerement plus grande */
+    background-color: #f5f5f5; /* Couleur de fond douce pour une meilleure lisibilite */
+}
+
+.navbar {
+    background-color: #0b4d8f; /* Couleur plus sombre pour une apparence elegante */
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between; /* Distribution uniforme des elements */
+    align-items: center;
+    padding: 12px 20px; /* Espacement plus equilibre */
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Ajout d'une ombre pour un effet de profondeur */
+}
+
+.navbar a {
+    color: #ecf0f1; /* Couleur claire et elegante */
+    text-decoration: none;
+    padding: 10px 16px; /* Espacement reduit pour une meilleure ergonomie */
+    display: flex;
+    align-items: center;
+    border-radius: 4px; /* Ajout de coins legerement arrondis */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transition douce pour les survols */
+}
+
+.navbar a i {
+    margin-right: 10px; /* Espacement ajuste pour une meilleure esthetique */
+}
+
+.navbar a:hover {
+    background-color: #34495e; /* Changement subtil mais visible au survol */
+    color: #ffffff; /* Garantie que le texte reste bien lisible */
+}

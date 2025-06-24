@@ -1,0 +1,142 @@
+.valider {
+    background-color: #6c63ff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+.valider:hover {
+    background-color: #574bd7;
+}
+
+.budgetSection {
+    height: 65vh;
+    z-index: 1000;
+
+    table {
+        border-collapse: collapse;
+        width: 98%;
+        height: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    th {
+        background-color: #6c63ff;
+        color: white;
+        text-align: center;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    tr:hover {
+        background-color: #f1f1f9;
+    }
+
+    .numberRow .cellNumber {
+        text-align: right;
+    }
+
+    .enTeteTable {
+        display: flex;
+        width: 96.5%;
+        justify-content: space-between;
+        align-items: center;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 10px;
+        padding: 12px 15px;
+        background-color: #f7f7fb;
+        border-radius: 12px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+        h2 {
+            font-size: 1.7rem;
+            margin: 0;
+            color: #333;
+        }
+
+        button {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            font-size: 15px;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+            i {
+                margin-right: 8px;
+            }
+        }
+
+        .prev {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .prev:hover {
+            background-color: #3e8e41;
+        }
+
+        .real {
+            background-color: #6c63ff;
+            color: white;
+        }
+
+        .real:hover {
+            background-color: #574bd7;
+        }
+
+        #paginationControls {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+
+            .direction {
+                display: flex;
+                align-items: center;
+                padding: 10px;
+
+                button {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    width: 8vw;
+                    background-color: #f1f1f1;
+                    color: #333;
+                    padding: 8px;
+                    border: 1px solid #ddd;
+                    border-radius: 8px;
+                    transition: all 0.3s ease;
+
+                    span {
+                        text-decoration: underline;
+                    }
+                }
+
+                button:hover {
+                    background-color: #ddd;
+                }
+            }
+        }
+    }
+}
