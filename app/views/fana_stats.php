@@ -18,9 +18,9 @@
         <th>Écart réel</th>
         <th>Voir tickets</th>
     </tr>
-    <?php foreach ($stats as $client => $data): ?>
+    <?php foreach ($stats as $data): ?>
         <tr>
-            <td><?= htmlspecialchars($client) ?></td>
+            <td><?= htmlspecialchars($data['client_name']) ?></td>
             <td><?= $data['nb_tickets'] ?></td>
             <td><?= number_format($data['cout_genere'], 2, ',', ' ') ?> €</td>
             <td><?= number_format($data['cout_genere_reel'], 2, ',', ' ') ?> €</td>

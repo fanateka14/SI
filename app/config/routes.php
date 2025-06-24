@@ -96,5 +96,5 @@ $router->post('/ajouterDiscussion', [$luberriController, 'ajouterDiscussion']);
 Flight::route('GET|POST /ajoutTicket', ['\app\controllers\TicketController', 'ajoutTicket']);
 Flight::route('GET|POST /listeTicket ', ['\app\controllers\TicketController', 'listeTickets']);
 
-Flight::route('/fana/stats', [\app\controllers\FanaController::class, 'statistiques']);
-Flight::route('/fana/comparaison-ticket', [\app\controllers\FanaController::class, 'comparaisonDepenseTicket']);
+Flight::route('/stats', [\app\controllers\FanaController::class, 'statistiques']);
+Flight::route('/comparaison-ticket', [\app\controllers\FanaController::class, 'comparaisonDepenseTicket']);

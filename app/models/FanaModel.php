@@ -15,11 +15,27 @@ class FanaModel
         $this->db = new PDO('mysql:host=localhost;dbname=gestion;charset=utf8', 'root', '');
     }
 
+    // Récupère la liste des clients (tiers) depuis Dolibarr
+    public function getClientsDolibarr()
+    {
+        $dolibarr = new \app\models\DolibarrModel();
+        $clients = $dolibarr->getTiers();
+        $map = [];
+        if (is_array($clients)) {
+            foreach ($clients as $c) {
+                if (isset($c['id']) && isset($c['name'])) {
+                    $map[$c['id']] = $c['name'];
+                }
+            }
+        }
+        return $map;
+    }
+
     // Récupère les stats coût généré par ticket, client, période, comparé au budget
     public function getStatistiques($periode = null)
     {
         $tickets = $this->getTicketsDolibarr($periode);
-        var_dump($tickets); // DEBUG : affiche les tickets récupérés
+        $clientsMap = $this->getClientsDolibarr();
         $stats = [];
         foreach ($tickets as $t) {
             if (!isset($t['id'])) continue; // Utilise 'id' au lieu de 'rowid'
@@ -29,14 +45,16 @@ class FanaModel
             } else {
                 $t['datec_str'] = '';
             }
-            $client = $t['fk_soc'];
-            if (!isset($stats[$client])) {
-                $stats[$client] = [
+            $clientId = $t['fk_soc'];
+            $clientName = isset($clientsMap[$clientId]) ? $clientsMap[$clientId] : $clientId;
+            if (!isset($stats[$clientId])) {
+                $stats[$clientId] = [
+                    'client_name' => $clientName,
                     'cout_genere' => 0,
                     'cout_genere_reel' => 0,
                     'nb_tickets' => 0,
                     'tickets' => [],
-                    'budget' => $this->getBudgetClient($client)
+                    'budget' => $this->getBudgetClient($clientId)
                 ];
             }
             // On va chercher l'assignation pour ce ticket
@@ -44,8 +62,8 @@ class FanaModel
             if ($assign) {
                 $cout = $assign['montantPrevu'] * $assign['duree'];
                 $coutReel = $assign['montantPrevu'] * $assign['dureeReel'];
-                $stats[$client]['cout_genere'] += $cout;
-                $stats[$client]['cout_genere_reel'] += $coutReel;
+                $stats[$clientId]['cout_genere'] += $cout;
+                $stats[$clientId]['cout_genere_reel'] += $coutReel;
                 $t['montantPrevu'] = $assign['montantPrevu'];
                 $t['duree'] = $assign['duree'];
                 $t['dureeReel'] = $assign['dureeReel'];
@@ -54,8 +72,8 @@ class FanaModel
                 $t['duree'] = 0;
                 $t['dureeReel'] = 0;
             }
-            $stats[$client]['nb_tickets']++;
-            $stats[$client]['tickets'][] = $t;
+            $stats[$clientId]['nb_tickets']++;
+            $stats[$clientId]['tickets'][] = $t;
         }
         return $stats;
     }
@@ -119,9 +137,7 @@ class FanaModel
         ]);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($ch);
-        echo '<pre style="background:#fff;color:#000;">API RESPONSE:<br>';
-        var_dump($response);
-        echo '</pre>';
+        // Suppression des logs de debug (echo/var_dump)
         curl_close($ch);
         return json_decode($response, true);
     }
@@ -130,6 +146,7 @@ class FanaModel
     public function getComparaisonDepenseTicket()
     {
         $tickets = $this->getTicketsDolibarr();
+        $clientsMap = $this->getClientsDolibarr();
         $result = [];
         foreach ($tickets as $t) {
             if (!isset($t['id'])) continue;
@@ -139,9 +156,11 @@ class FanaModel
             $dureeReel = $assign ? $assign['dureeReel'] : 0;
             $depense = $montantPrevu * $dureeReel;
             $budget = $montantPrevu * $duree;
+            $clientId = $t['fk_soc'];
+            $clientName = isset($clientsMap[$clientId]) ? $clientsMap[$clientId] : $clientId;
             $result[] = [
                 'ticket_id' => $t['id'],
-                'client' => $t['fk_soc'],
+                'client' => $clientName,
                 'sujet' => $t['subject'] ?? '',
                 'montantPrevu' => $montantPrevu,
                 'duree' => $duree,

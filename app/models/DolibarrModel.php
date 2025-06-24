@@ -8,10 +8,10 @@
  
 class DolibarrModel {
 
-        private $apiUrl = 'http://localhost/dolibarr-21.0.1/dolibarr-21.0.1/htdocs/api/index.php';
-    private $apiKey = '0faa8810426f7a73478550268bd2c317a56a50da';
-    // private $apiUrl = 'http://localhost/dolibarr-21.0.1/htdocs/api/index.php';
+    //     private $apiUrl = 'http://localhost/dolibarr-21.0.1/dolibarr-21.0.1/htdocs/api/index.php';
     // private $apiKey = '0faa8810426f7a73478550268bd2c317a56a50da';
+    private $apiUrl = 'http://localhost/dolibarr-21.0.1/htdocs/api/index.php';
+    private $apiKey = '77db0a73baace16da2e826df8c9c3f630c3f7d40';
 
 
 
