@@ -33,15 +33,6 @@
                 <?php endforeach; ?>
             </select>
 
-            <!-- <label for="assigne">Assigné à</label>
-            <select name="assigne" id="assigne" required>
-                <?php foreach ($users as $user): ?>
-                    <option value="<?= $user['id'] ?>">
-                        <?= htmlspecialchars($user['lastname'] ?? '') ?>
-                    </option>
-                <?php endforeach; ?>
-            </select> -->
-
             <button type="submit">Ajouter</button>
         </fieldset>
     </form>
