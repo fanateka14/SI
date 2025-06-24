@@ -33,6 +33,7 @@ class TicketController {
                 'severite'     => Flight::request()->data->severite,
                 'sujet'        => Flight::request()->data->sujet,
                 'message'      => Flight::request()->data->message,
+                'status'       => 1, // Statut ouvert
                 'tiers'        => Flight::request()->data->tiers,
                 'assigne'      => Flight::request()->data->assigne,
             ];
@@ -40,11 +41,13 @@ class TicketController {
             $model->ajoutTicketDolibarr($data);
              $dolibarr = new \app\models\DolibarrModel();
             $tiers = $dolibarr->getTiers(); // Liste des clients/tiers Dolibarr
-            $users = $dolibarr->getUsers(); // Liste des utilisateurs Dolibarr
+            $users = $dolibarr->getUsers();
+            // Liste des utilisateurs Dolibarr
             Flight::render('template', [
                 'page' => 'ticket_add',
                 'users' => $users,
                 'tiers' => $tiers
+            
                 
             ]);
         } else {
@@ -60,24 +63,41 @@ class TicketController {
         }
     }
 
-     public function listeTickets() {
-        $ticket = new \app\models\DolibarrModel();
-        $tickets = $ticket->getTickets(); // récupère tous les tickets
-        $agents = $ticket->getAgent(); 
-            $tiers = $ticket->getTiers(); // Liste des clients/tiers Dolibarr
+    public function listeTickets() {
+        $dolibarr = new \app\models\DolibarrModel();
+        $tickets = $dolibarr->getTickets();
+        $agents = $dolibarr->getAgent();
+        $tiers = $dolibarr->getTiers();
 
-        // récupère tous les tickets
+        // Récupérer toutes les assignations en une seule requête
+        $ticketModel = new \app\models\TicketModel();
+        $assignations = $ticketModel->getAllAssignations(); // Nouvelle méthode à créer
+
+        // Associer montantPrevu et duree à chaque ticket
+        foreach ($tickets as &$ticket) {
+            $id = $ticket['id'];
+            if (isset($assignations[$id])) {
+                $ticket['montantPrevu'] = $assignations[$id]['montantPrevu'];
+                $ticket['duree'] = $assignations[$id]['duree'];
+            } else {
+                $ticket['montantPrevu'] = '';
+                $ticket['duree'] = '';
+            }
+        }
+
         Flight::render('template', [
             'tickets' => $tickets,
             'agents' => $agents,
             'tiers' => $tiers,
             'page' => 'ticket_list'
-
         ]);
     }
-       public function updateTicket()
+    public function updateTicket()
 {
     $id = Flight::request()->data->id;
+    $montantPrevu = Flight::request()->data->montantPrevu;
+    $duree = Flight::request()->data->duree;
+
     $ticketData = [
         "status"      => (int)Flight::request()->data->statut,
         "severity_code"  => (int)Flight::request()->data->priorite,
@@ -86,6 +106,9 @@ class TicketController {
 
     $dolibarr = new \app\models\DolibarrModel();
     $result = $dolibarr->putTicket($id, $ticketData);
+
+    $ticketModel = new \app\models\TicketModel();
+    $ticketModel->saveAssignationTicket($id, $montantPrevu, $duree);
 
     // Optionnel : gérer le retour ou afficher un message
     Flight::redirect('listeTicket');

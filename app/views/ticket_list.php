@@ -149,6 +149,8 @@ function getClientName($fk_soc, $tiers) {
 
             <th>Priorité</th>
             <th>Affecter a un agent</th>
+            <th>Montant Prévu</th>
+            <th>Durée Estimée (h)</th>
             <th>Action</th>
         </tr>
         </thead>
@@ -180,6 +182,12 @@ function getClientName($fk_soc, $tiers) {
                 }
                 echo $agentNom ?: 'Non assigné';
             ?>
+        </td>
+        <td>
+            <?= isset($ticket['montantPrevu']) && $ticket['montantPrevu'] !== null ? htmlspecialchars($ticket['montantPrevu']) : '' ?>
+        </td>
+        <td>
+            <?= isset($ticket['duree']) && $ticket['duree'] !== null ? htmlspecialchars($ticket['duree']) : '' ?>
         </td>
         <td>
             <button class="edit-btn" type="button" onclick="showEditForm(<?= $ticket['id'] ?>)">
@@ -219,6 +227,12 @@ function getClientName($fk_soc, $tiers) {
                     </option>
                 <?php endforeach; ?>
             </select>
+        </td>
+        <td>
+            <input type="number" step="0.01" name="montantPrevu" value="<?= isset($ticket['montantPrevu']) ? htmlspecialchars($ticket['montantPrevu']) : '' ?>" placeholder="Montant prévu" required>
+        </td>
+        <td>
+            <input type="number" step="0.01" name="duree" value="<?= isset($ticket['duree']) ? htmlspecialchars($ticket['duree']) : '' ?>" placeholder="Temps estimé (h)" required>
         </td>
         <td>
             <input type="hidden" name="id" value="<?= $ticket['id'] ?>">

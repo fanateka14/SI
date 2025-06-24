@@ -55,7 +55,7 @@ class DolibarrModel {
     {
         // Récupère tous les utilisateurs (agents) depuis Dolibarr
         return $this->makeRequest('users');
-    };
+    }
 
     // public function getUsers()
     // {
