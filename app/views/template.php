@@ -38,6 +38,7 @@
                
             <?php }
         ?>
+        <a href="ajouterDiscussion"><i class="fas fa-comments"></i>Ajouter Discussion</a>
         <a href="budget"><i class="fas fa-wallet"></i>Budget</a>
         <a href="#"><i class="fas fa-building"></i>Departement</a>
         <a href="crm"><i class="fas fa-handshake"></i>CRM</a>
