@@ -33,7 +33,6 @@
                 <?php endforeach; ?>
             </select>
 
-
             <button type="submit">Ajouter</button>
         </fieldset>
     </form>

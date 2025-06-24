@@ -7,7 +7,7 @@ class TicketModel {
 
     public function __construct() {
         // $this->db = $db;
-        $this->db = Flight::db();
+        $this->db = \Flight::db();
 
     }
     public  function search($idClient = null, $statut = null, $priorite = null) {
@@ -49,9 +49,54 @@ class TicketModel {
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
+    // public function ajoutTicketDolibarr($data)
+    // {
+    //     $dolibarr = new \app\models\DolibarrModel();
+    //     return $dolibarr->createTicket($data);
+    // }
     public function ajoutTicketDolibarr($data)
-    {
-        $dolibarr = new \app\models\DolibarrModel();
-        return $dolibarr->createTicket($data);
+{
+    $dolibarr = new \app\models\DolibarrModel();
+    $result = $dolibarr->createTicket($data);
+    // $idTicket = $result['id'];
+    // $this->db->query("insert into assignation_ticket (idTicket, montantPrevu, duree) VALUES ($idTicket, 0, 0)");
+    // Si la création du ticket a réussi et qu'on a l'id du ticket
+    // if (isset($result['id'])) {
+    //     $idTicket = $result['id'];
+    //     try {
+    //         $stmt = $this->db->prepare("INSERT INTO assignation_ticket (idTicket, montantPrevu, duree) VALUES (?, 0, 0)");
+    //         $stmt->execute([12345]);
+    //     } catch (\PDOException $e) {
+    //         echo "Erreur SQL : " . $e->getMessage();
+    //     }
+    // }
+
+    return $result;
+}
+public function saveAssignationTicket($idTicket, $montantPrevu, $duree)
+{
+    // Vérifie si une assignation existe déjà
+    $stmt = $this->db->prepare("SELECT idAsignation FROM assignation_ticket WHERE idTicket = ?");
+    $stmt->execute([$idTicket]);
+    if ($stmt->fetch()) {
+        // Mise à jour
+        $stmt = $this->db->prepare("UPDATE assignation_ticket SET montantPrevu = ?, duree = ? WHERE idTicket = ?");
+        $stmt->execute([$montantPrevu, $duree, $idTicket]);
+    } else {
+        // Insertion
+        $stmt = $this->db->prepare("INSERT INTO assignation_ticket (idTicket, montantPrevu, duree) VALUES (?, ?, ?)");
+        $stmt->execute([$idTicket, $montantPrevu, $duree]);
     }
+}
+public function getAllAssignations()
+{
+    $stmt = $this->db->query("SELECT idTicket, montantPrevu, duree FROM assignation_ticket");
+    $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    $assignations = [];
+    foreach ($rows as $row) {
+        $assignations[$row['idTicket']] = $row;
+    }
+    return $assignations;
+}
+    
 }
