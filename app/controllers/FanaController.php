@@ -24,4 +24,14 @@ class FanaController
             'stats' => $stats
         ]);
     }
+
+    public function comparaisonDepenseTicket()
+    {
+        $model = new FanaModel();
+        $stats = $model->getComparaisonDepenseTicket();
+        Flight::render('template', [
+            'page' => 'fana_comparaison_ticket',
+            'stats' => $stats
+        ]);
+    }
 }

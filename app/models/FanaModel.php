@@ -33,6 +33,7 @@ class FanaModel
             if (!isset($stats[$client])) {
                 $stats[$client] = [
                     'cout_genere' => 0,
+                    'cout_genere_reel' => 0,
                     'nb_tickets' => 0,
                     'tickets' => [],
                     'budget' => $this->getBudgetClient($client)
@@ -42,12 +43,16 @@ class FanaModel
             $assign = $this->getAssignationTicket($t['id']);
             if ($assign) {
                 $cout = $assign['montantPrevu'] * $assign['duree'];
+                $coutReel = $assign['montantPrevu'] * $assign['dureeReel'];
                 $stats[$client]['cout_genere'] += $cout;
+                $stats[$client]['cout_genere_reel'] += $coutReel;
                 $t['montantPrevu'] = $assign['montantPrevu'];
                 $t['duree'] = $assign['duree'];
+                $t['dureeReel'] = $assign['dureeReel'];
             } else {
                 $t['montantPrevu'] = 0;
                 $t['duree'] = 0;
+                $t['dureeReel'] = 0;
             }
             $stats[$client]['nb_tickets']++;
             $stats[$client]['tickets'][] = $t;
@@ -119,5 +124,33 @@ class FanaModel
         echo '</pre>';
         curl_close($ch);
         return json_decode($response, true);
+    }
+
+    // Comparaison dépense par rapport au budget ticket (dépense réelle = montantPrevu * dureeReel)
+    public function getComparaisonDepenseTicket()
+    {
+        $tickets = $this->getTicketsDolibarr();
+        $result = [];
+        foreach ($tickets as $t) {
+            if (!isset($t['id'])) continue;
+            $assign = $this->getAssignationTicket($t['id']);
+            $montantPrevu = $assign ? $assign['montantPrevu'] : 0;
+            $duree = $assign ? $assign['duree'] : 0;
+            $dureeReel = $assign ? $assign['dureeReel'] : 0;
+            $depense = $montantPrevu * $dureeReel;
+            $budget = $montantPrevu * $duree;
+            $result[] = [
+                'ticket_id' => $t['id'],
+                'client' => $t['fk_soc'],
+                'sujet' => $t['subject'] ?? '',
+                'montantPrevu' => $montantPrevu,
+                'duree' => $duree,
+                'dureeReel' => $dureeReel,
+                'depense' => $depense,
+                'budget' => $budget,
+                'ecart' => abs($depense - $budget)
+            ];
+        }
+        return $result;
     }
 }

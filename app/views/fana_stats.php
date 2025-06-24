@@ -11,9 +11,11 @@
     <tr>
         <th>Client</th>
         <th>Nombre de tickets</th>
-        <th>Coût généré</th>
+        <th>Coût généré prévisionnel</th>
+        <th>Coût généré réel</th>
         <th>Budget</th>
-        <th>Écart</th>
+        <th>Écart prévisionnel</th>
+        <th>Écart réel</th>
         <th>Voir tickets</th>
     </tr>
     <?php foreach ($stats as $client => $data): ?>
@@ -21,10 +23,10 @@
             <td><?= htmlspecialchars($client) ?></td>
             <td><?= $data['nb_tickets'] ?></td>
             <td><?= number_format($data['cout_genere'], 2, ',', ' ') ?> €</td>
+            <td><?= number_format($data['cout_genere_reel'], 2, ',', ' ') ?> €</td>
             <td><?= number_format($data['budget'], 2, ',', ' ') ?> €</td>
-            <td style="color:<?= $data['cout_genere'] > $data['budget'] ? 'red' : 'green' ?>">
-                <?= number_format(abs($data['cout_genere'] - $data['budget']), 2, ',', ' ') ?> €
-            </td>
+            <td><?= number_format(abs($data['cout_genere'] - $data['budget']), 2, ',', ' ') ?> €</td>
+            <td><?= number_format(abs($data['cout_genere_reel'] - $data['budget']), 2, ',', ' ') ?> €</td>
             <td>
                 <a href="#" onclick="alert('Tickets: <?= htmlspecialchars(json_encode($data['tickets'])) ?>')">Voir tickets</a>
             </td>

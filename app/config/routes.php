@@ -91,3 +91,4 @@ Flight::route('GET|POST /listeTicket ', ['\app\controllers\TicketController', 'l
 
 // Ajoute une route pour les stats Fana
 Flight::route('/fana/stats', [\app\controllers\FanaController::class, 'statistiques']);
+Flight::route('/fana/comparaison-ticket', [\app\controllers\FanaController::class, 'comparaisonDepenseTicket']);
