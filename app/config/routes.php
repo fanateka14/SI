@@ -16,6 +16,7 @@ use app\controllers\validationCRMController;
 use app\controllers\TicketController;
 use app\controllers\UserController;     
 use app\controllers\DolibarrController;
+use app\controllers\LuberriController;
 
 
 /** 
@@ -88,3 +89,9 @@ Flight::route('/api/ventes-par-mois', function() use ($StatController) {
 
 Flight::route('GET|POST /ajoutTicket', ['\app\controllers\TicketController','ajoutTicket']);
 Flight::route('GET|POST /listeTicket ', ['\app\controllers\TicketController','listeTickets']);
+
+$luberriController = new \app\controllers\LuberriController();
+
+$router->get('/ajouterDiscussion', [$luberriController, 'ajouterDiscussion']);
+$router->post('/ajouterDiscussion', [$luberriController, 'ajouterDiscussion']);
+

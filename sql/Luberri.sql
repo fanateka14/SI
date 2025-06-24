@@ -1,0 +1,7 @@
+CREATE TABLE discussion (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    idTier INT NOT NULL,
+    message TEXT NOT NULL,
+    reponse TEXT,
+    dateHeure DATETIME DEFAULT CURRENT_TIMESTAMP
+);
