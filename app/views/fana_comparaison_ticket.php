@@ -1,5 +1,10 @@
 <div class="fana-table-container">
-    <h1>Comparaison Dépense vs Budget par Ticket</h1>
+    <div class="fff">
+        <span><h1>Comparaison Dépense vs Budget par Ticket<a href="fana_comparaison_ticket_pdf" class="btn btn-danger" target="_blank" style="margin-bottom:16px;">Exporter PDF</a></h1>
+        
+    </span>
+
+    </div>
     <table class="fana-table">
         <tr>
             <th>Ticket</th>

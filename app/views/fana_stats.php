@@ -1,13 +1,12 @@
 <div class="fana-table-container">
     <h1>Statistiques Coût Généré par Client</h1>
-    <form method="get" action="" class="mb-4">
-        <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;">
-            <label for="start">Date début :</label>
-            <input type="date" name="start" id="start" value="<?= htmlspecialchars($_GET['start'] ?? '') ?>">
-            <label for="end">Date fin :</label>
-            <input type="date" name="end" id="end" value="<?= htmlspecialchars($_GET['end'] ?? '') ?>">
-            <button type="submit" class="btn btn-primary">Filtrer</button>
-        </div>
+    <form method="get" action="" class="mb-4" style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;">
+        <label for="start">Date début :</label>
+        <input type="date" name="start" id="start" value="<?= htmlspecialchars($_GET['start'] ?? '') ?>">
+        <label for="end">Date fin :</label>
+        <input type="date" name="end" id="end" value="<?= htmlspecialchars($_GET['end'] ?? '') ?>">
+        <button type="submit" class="btn btn-primary">Filtrer</button>
+        <a href="fana_stats_pdf?start=<?= htmlspecialchars($_GET['start'] ?? '') ?>&end=<?= htmlspecialchars($_GET['end'] ?? '') ?>" class="btn btn-danger" target="_blank">Exporter PDF</a>
     </form>
     <table class="fana-table">
         <tr>
