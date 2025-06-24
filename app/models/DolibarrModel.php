@@ -203,6 +203,13 @@ public function getUsers()
 {
     return $this->makeRequest('users');
 }
-
+public function updateTicket($id, $data)
+{
+    return $this->makeRequest('tickets/' . $id, 'PUT', $data);
+}
+public function putTicket($id, $data)
+{
+    return $this->putRequest('tickets/' . $id, $data);
+}
 }
 ?>

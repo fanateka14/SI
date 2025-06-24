@@ -75,4 +75,19 @@ class TicketController {
 
         ]);
     }
+       public function updateTicket()
+{
+    $id = Flight::request()->data->id;
+    $ticketData = [
+        "status"      => (int)Flight::request()->data->statut,
+        "severity_code"  => (int)Flight::request()->data->priorite,
+        "fk_user_assign" => Flight::request()->data->agent ? (int)Flight::request()->data->agent : null
+    ];
+
+    $dolibarr = new \app\models\DolibarrModel();
+    $result = $dolibarr->putTicket($id, $ticketData);
+
+    // Optionnel : gérer le retour ou afficher un message
+    Flight::redirect('listeTicket');
+}
 }
