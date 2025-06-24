@@ -73,19 +73,38 @@ class TicketModel {
 
     return $result;
 }
-public function saveAssignationTicket($idTicket, $montantPrevu, $duree)
+// public function saveAssignationTicket($idTicket, $montantPrevu, $duree)
+// {
+//     // Vérifie si une assignation existe déjà
+//     $stmt = $this->db->prepare("SELECT idAsignation FROM assignation_ticket WHERE idTicket = ?");
+//     $stmt->execute([$idTicket]);
+//     if ($stmt->fetch()) {
+//         // Mise à jour
+//         $stmt = $this->db->prepare("UPDATE assignation_ticket SET montantPrevu = ?, duree = ? WHERE idTicket = ?");
+//         $stmt->execute([$montantPrevu, $duree, $idTicket]);
+//     } else {
+//         // Insertion
+//         $stmt = $this->db->prepare("INSERT INTO assignation_ticket (idTicket, montantPrevu, duree) VALUES (?, ?, ?)");
+//         $stmt->execute([$idTicket, $montantPrevu, $duree]);
+//     }
+// }
+public function saveAssignationTicket($idTicket, $montantPrevu, $duree, $dureeReelle = null)
 {
-    // Vérifie si une assignation existe déjà
     $stmt = $this->db->prepare("SELECT idAsignation FROM assignation_ticket WHERE idTicket = ?");
     $stmt->execute([$idTicket]);
     if ($stmt->fetch()) {
         // Mise à jour
-        $stmt = $this->db->prepare("UPDATE assignation_ticket SET montantPrevu = ?, duree = ? WHERE idTicket = ?");
-        $stmt->execute([$montantPrevu, $duree, $idTicket]);
+        if ($dureeReelle !== null && $dureeReelle !== '') {
+            $stmt = $this->db->prepare("UPDATE assignation_ticket SET montantPrevu = ?, duree = ?, dureeReel = ? WHERE idTicket = ?");
+            $stmt->execute([$montantPrevu, $duree, $dureeReelle, $idTicket]);
+        } else {
+            $stmt = $this->db->prepare("UPDATE assignation_ticket SET montantPrevu = ?, duree = ? WHERE idTicket = ?");
+            $stmt->execute([$montantPrevu, $duree, $idTicket]);
+        }
     } else {
         // Insertion
-        $stmt = $this->db->prepare("INSERT INTO assignation_ticket (idTicket, montantPrevu, duree) VALUES (?, ?, ?)");
-        $stmt->execute([$idTicket, $montantPrevu, $duree]);
+        $stmt = $this->db->prepare("INSERT INTO assignation_ticket (idTicket, montantPrevu, duree, dureeReel) VALUES (?, ?, ?, ?)");
+        $stmt->execute([$idTicket, $montantPrevu, $duree, $dureeReelle]);
     }
 }
 public function getAllAssignations()

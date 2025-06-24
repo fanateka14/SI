@@ -92,25 +92,46 @@ class TicketController {
             'page' => 'ticket_list'
         ]);
     }
-    public function updateTicket()
+//     public function updateTicket()
+// {
+//     $id = Flight::request()->data->id;
+//     $montantPrevu = Flight::request()->data->montantPrevu;
+//     $duree = Flight::request()->data->duree;
+
+//     $ticketData = [
+//         "status"      => (int)Flight::request()->data->statut,
+//         "severity_code"  => (int)Flight::request()->data->priorite,
+//         "fk_user_assign" => Flight::request()->data->agent ? (int)Flight::request()->data->agent : null
+//     ];
+
+//     $dolibarr = new \app\models\DolibarrModel();
+//     $result = $dolibarr->putTicket($id, $ticketData);
+
+//     $ticketModel = new \app\models\TicketModel();
+//     $ticketModel->saveAssignationTicket($id, $montantPrevu, $duree);
+
+//     // Optionnel : gérer le retour ou afficher un message
+//     Flight::redirect('listeTicket');
+// }
+public function updateTicket()
 {
     $id = Flight::request()->data->id;
     $montantPrevu = Flight::request()->data->montantPrevu;
     $duree = Flight::request()->data->duree;
+    $dureeReelle = Flight::request()->data->dureeReelle; // <-- récupérer la durée réelle
 
     $ticketData = [
-        "status"      => (int)Flight::request()->data->statut,
-        "severity_code"  => (int)Flight::request()->data->priorite,
-        "fk_user_assign" => Flight::request()->data->agent ? (int)Flight::request()->data->agent : null
+        "status"        => (int)Flight::request()->data->statut,
+        "severity_code" => (int)Flight::request()->data->priorite,
+        "fk_user_assign"=> Flight::request()->data->agent ? (int)Flight::request()->data->agent : null
     ];
 
     $dolibarr = new \app\models\DolibarrModel();
-    $result = $dolibarr->putTicket($id, $ticketData);
+    $dolibarr->putTicket($id, $ticketData);
 
     $ticketModel = new \app\models\TicketModel();
-    $ticketModel->saveAssignationTicket($id, $montantPrevu, $duree);
+    $ticketModel->saveAssignationTicket($id, $montantPrevu, $duree, $dureeReelle); // <-- passer la durée réelle
 
-    // Optionnel : gérer le retour ou afficher un message
     Flight::redirect('listeTicket');
 }
 }

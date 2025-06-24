@@ -7,8 +7,10 @@ use PDO;
 class FanaModel
 {
     private $db;
-    private $dolibarrApiUrl = 'http://localhost/dolibarr-21.0.1/dolibarr-21.0.1/htdocs/api/index.php';
-    private $dolibarrApiKey = '0faa8810426f7a73478550268bd2c317a56a50da';
+    // private $dolibarrApiUrl = 'http://localhost/dolibarr-21.0.1/dolibarr-21.0.1/htdocs/api/index.php';
+    // private $dolibarrApiKey = '0faa8810426f7a73478550268bd2c317a56a50da';
+    private $dolibarrApiUrl = 'http://localhost/dolibarr-21.0.1/htdocs/api/index.php';
+    private $dolibarrApiKey = '77db0a73baace16da2e826df8c9c3f630c3f7d40';
 
     public function __construct()
     {
