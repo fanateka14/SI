@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/crmForm.css">
 
     <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/chart.css">
+    <link rel="stylesheet" href="<?= Flight::get('flight.base_url') ?>/public/assets/css/fana_stats.css">
 
     <style>
 
