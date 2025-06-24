@@ -46,8 +46,6 @@
         <a href="deco"><i class="fas fa-sign-out-alt"></i>Deconnexion</a>
         <a href="ajoutTicket"><i class="fas fa-plus"></i>ajoutTicket</a>
         <a href="listeTicket"><i class="fas fa-building"></i>Voir liste ticket</a>
-
-        
     </div>
 
     <main>
