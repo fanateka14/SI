@@ -11,3 +11,4 @@ INSERT INTO assignation_ticket (idTicket, montantPrevu, duree, dureeReel) VALUES
 (1, 10000, 2, 2.5),
 (2, 8000, 1, 1),
 (3, 12000, 3, 2.8);
+INSERT INTO Dept (nomDept, mdp, budget) VALUES ('client', '1234', 0.00);
