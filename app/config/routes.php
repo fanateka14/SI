@@ -98,3 +98,5 @@ Flight::route('GET|POST /listeTicket ', ['\app\controllers\TicketController', 'l
 
 Flight::route('/stats', [\app\controllers\FanaController::class, 'statistiques']);
 Flight::route('/comparaison-ticket', [\app\controllers\FanaController::class, 'comparaisonDepenseTicket']);
+$router->post('/updateTicket', ['\app\controllers\TicketController', 'updateTicket']);
+
