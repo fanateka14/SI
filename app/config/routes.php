@@ -14,7 +14,7 @@ use app\controllers\DepartementController;
 use app\controllers\StatistiqueController;
 use app\controllers\validationCRMController;
 use app\controllers\TicketController;
-use app\controllers\UserController;     
+use app\controllers\UserController;
 use app\controllers\DolibarrController;
 
 
@@ -78,16 +78,16 @@ $router->get('/crm', [$formController, 'crm']);
 
 $StatController = new StatistiqueController();
 
-Flight::route('/chart', function() use ($StatController) {
+Flight::route('/chart', function () use ($StatController) {
     $StatController->showDashboard();
 });
 
-Flight::route('/api/ventes-par-mois', function() use ($StatController) {
+Flight::route('/api/ventes-par-mois', function () use ($StatController) {
     $StatController->getSalesByMonthJson();
 });
 
-Flight::route('GET|POST /ajoutTicket', ['\app\controllers\TicketController','ajoutTicket']);
-Flight::route('GET|POST /listeTicket ', ['\app\controllers\TicketController','listeTickets']);
+Flight::route('GET|POST /ajoutTicket', ['\app\controllers\TicketController', 'ajoutTicket']);
+Flight::route('GET|POST /listeTicket ', ['\app\controllers\TicketController', 'listeTickets']);
 
 // Ajoute une route pour les stats Fana
 Flight::route('/fana/stats', [\app\controllers\FanaController::class, 'statistiques']);

@@ -1,12 +1,15 @@
 <?php
+
 namespace app\controllers;
 
 use app\models\FanaModel;
 use Flight;
 
-class FanaController {
+class FanaController
+{
     // Affiche la page de statistiques
-    public function statistiques() {
+    public function statistiques()
+    {
         $periode = null;
         if (!empty($_GET['start']) && !empty($_GET['end'])) {
             $periode = [

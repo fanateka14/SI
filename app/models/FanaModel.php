@@ -1,19 +1,23 @@
 <?php
+
 namespace app\models;
 
 use PDO;
 
-class FanaModel {
+class FanaModel
+{
     private $db;
     private $dolibarrApiUrl = 'http://localhost/dolibarr-21.0.1/dolibarr-21.0.1/htdocs/api/index.php';
     private $dolibarrApiKey = '0faa8810426f7a73478550268bd2c317a56a50da';
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->db = new PDO('mysql:host=localhost;dbname=gestion;charset=utf8', 'root', '');
     }
 
     // Récupère les stats coût généré par ticket, client, période, comparé au budget
-    public function getStatistiques($periode = null) {
+    public function getStatistiques($periode = null)
+    {
         $tickets = $this->getTicketsDolibarr($periode);
         var_dump($tickets); // DEBUG : affiche les tickets récupérés
         $stats = [];
@@ -52,7 +56,8 @@ class FanaModel {
     }
 
     // Récupère les tickets depuis Dolibarr via l'API
-    public function getTicketsDolibarr($periode = null) {
+    public function getTicketsDolibarr($periode = null)
+    {
         $endpoint = 'tickets';
         $tickets = $this->makeRequest($endpoint);
         // Conversion du timestamp en date pour chaque ticket
@@ -66,7 +71,7 @@ class FanaModel {
             }
         }
         if ($periode && is_array($tickets)) {
-            $tickets = array_filter($tickets, function($t) use ($periode) {
+            $tickets = array_filter($tickets, function ($t) use ($periode) {
                 return (
                     isset($t['datec_str']) &&
                     $t['datec_str'] >= $periode['start'] &&
@@ -78,7 +83,8 @@ class FanaModel {
     }
 
     // Récupère l'assignation d'un ticket
-    public function getAssignationTicket($idTicket) {
+    public function getAssignationTicket($idTicket)
+    {
         $sql = "SELECT * FROM assignation_ticket WHERE idTicket = :idTicket LIMIT 1";
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':idTicket', $idTicket);
@@ -87,7 +93,8 @@ class FanaModel {
     }
 
     // Récupère le budget d'un département/client depuis budgetcrm
-    public function getBudgetClient($idDept) {
+    public function getBudgetClient($idDept)
+    {
         $sql = "SELECT SUM(montant) as budget FROM budgetcrm WHERE idDept = :idDept";
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':idDept', $idDept);
@@ -97,7 +104,8 @@ class FanaModel {
     }
 
     // Appel API Dolibarr (comme dans DolibarrModel)
-    public function makeRequest($args) {
+    public function makeRequest($args)
+    {
         $url = $this->dolibarrApiUrl . '/' . $args;
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
