@@ -8,7 +8,13 @@
  
 class DolibarrModel {
     private $apiUrl = 'http://localhost/dolibarr-21.0.1/htdocs/api/index.php';
-    private $apiKey = '13f7ffe9a4eae75d93d2290eeb5bedcca0c19687';
+
+
+    
+    // private $apiKey = '13f7ffe9a4eae75d93d2290eeb5bedcca0c19687';
+
+
+    private $apiKey = '77db0a73baace16da2e826df8c9c3f630c3f7d40';
 
     //  private function makeRequest($endpoint)
     // {
