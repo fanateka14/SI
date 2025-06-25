@@ -24,14 +24,14 @@
             <tr>
                 <td><?= htmlspecialchars($data['client_name']) ?></td>
                 <td><?= $data['nb_tickets'] ?></td>
-                <td><?= number_format($data['cout_genere'], 2, ',', ' ') ?> €</td>
-                <td><?= number_format($data['cout_genere_reel'], 2, ',', ' ') ?> €</td>
-                <td><?= number_format($data['budget'], 2, ',', ' ') ?> €</td>
+                <td><?= number_format($data['cout_genere'], 2, ',', ' ') ?> Ar</td>
+                <td><?= number_format($data['cout_genere_reel'], 2, ',', ' ') ?> Ar</td>
+                <td><?= number_format($data['budget']*3, 2, ',', ' ') ?> Ar</td>
                 <td class="<?= ($data['cout_genere'] - $data['budget']) < 0 ? 'ecart-negatif' : 'ecart-positif' ?>">
-                    <?= number_format(abs($data['cout_genere'] - $data['budget']), 2, ',', ' ') ?> €
+                    <?= number_format(abs($data['cout_genere'] - $data['budget']), 2, ',', ' ') ?> Ar
                 </td>
                 <td class="<?= ($data['cout_genere_reel'] - $data['budget']) < 0 ? 'ecart-negatif' : 'ecart-positif' ?>">
-                    <?= number_format(abs($data['cout_genere_reel'] - $data['budget']), 2, ',', ' ') ?> €
+                    <?= number_format(abs($data['cout_genere_reel'] - $data['budget']), 2, ',', ' ') ?> Ar
                 </td>
                 <td>
                     <a href="#" onclick="alert('Tickets: <?= htmlspecialchars(json_encode($data['tickets'])) ?>')">Voir tickets</a>

@@ -157,4 +157,24 @@ class ValeurController
             echo "Erreur lors de l'ajout de la realisation.";
         }
     }
+
+    public function updateAllBudgetsCrm()
+    {
+        $budgets = Flight::request()->data->budgets; // Tableau associatif [idBudgetCRM => montant]
+        $conn = \Flight::db();
+        foreach ($budgets as $idBudgetCRM => $montant) {
+            $stmt = $conn->prepare("UPDATE budgetCRM SET montant = ?");
+            $stmt->execute([$montant, $idBudgetCRM]);
+        }
+        Flight::redirect('budgetcrm-list');
+    }
+
+    public function listeBudgetsCrm()
+    {
+        $conn = \Flight::db();
+        $budgets = $conn->query("SELECT * FROM budgetCRM")->fetchAll(\PDO::FETCH_ASSOC);
+        \Flight::render('budgetcrm_list', [
+            'budgets' => $budgets
+        ]);
+    }
 }

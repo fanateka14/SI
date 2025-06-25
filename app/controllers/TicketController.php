@@ -118,7 +118,12 @@ public function updateTicket()
     $id = Flight::request()->data->id;
     $montantPrevu = Flight::request()->data->montantPrevu;
     $duree = Flight::request()->data->duree;
-    $dureeReelle = Flight::request()->data->dureeReelle; // <-- récupérer la durée réelle
+    $dureeReelle = Flight::request()->data->dureeReelle;
+
+    // Correction : si vide, mettre à NULL
+    if ($dureeReelle === '' || $dureeReelle === null) {
+        $dureeReelle = null;
+    }
 
     $ticketData = [
         "status"        => (int)Flight::request()->data->statut,
@@ -130,7 +135,7 @@ public function updateTicket()
     $dolibarr->putTicket($id, $ticketData);
 
     $ticketModel = new \app\models\TicketModel();
-    $ticketModel->saveAssignationTicket($id, $montantPrevu, $duree, $dureeReelle); // <-- passer la durée réelle
+    $ticketModel->saveAssignationTicket($id, $montantPrevu, $duree, $dureeReelle);
 
     Flight::redirect('listeTicket');
 }

@@ -12,3 +12,8 @@ CREATE TABLE Service (
     commentaire VARCHAR(255),
     FOREIGN KEY (idTicket) REFERENCES Ticket(idTicket)
 );
+CREATE TABLE budgetCRM (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    budget INT NOT NULL
+);
+INSERT INTO budgetCRM (idDept, montant) VALUES (1, 5000);

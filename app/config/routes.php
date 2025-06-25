@@ -107,3 +107,5 @@ $router->get('/ticketreview', [$ticketReviewController, 'listClosedTickets']);
 $router->get('/ticketreview-avis/@id', [$ticketReviewController, 'showReviewForm']);
 $router->post('/ticketreview-save', [$ticketReviewController, 'saveReview']);
 $router->get('/ticketreview-list', [$ticketReviewController, 'listAllReviews']);
+$router->get('/budgetcrm-list', ['\app\controllers\ValeurController', 'listeBudgetsCrm']);
+$router->post('/updateAllBudgetsCrm', ['\app\controllers\ValeurController', 'updateAllBudgetsCrm']);

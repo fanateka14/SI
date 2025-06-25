@@ -48,16 +48,16 @@ class FanaController
         $pdf = new \FPDF();
         $pdf->AddPage();
         $pdf->SetFont('Arial', 'B', 16);
-        $pdf->Cell(0, 10, 'Statistiques Coût Généré par Client', 0, 1, 'C');
+        $pdf->Cell(0, 10, 'Statistiques Coet Genere par Client', 0, 1, 'C');
         $pdf->Ln(5);
 
         // En-tête du tableau
         $pdf->SetFont('Arial', 'B', 12);
         $pdf->Cell(60, 10, 'Client', 1);
         $pdf->Cell(30, 10, 'Nb Tickets', 1);
-        $pdf->Cell(35, 10, 'Coût prev.', 1);
-        $pdf->Cell(35, 10, 'Coût reel', 1);
-        $pdf->Cell(30, 10, 'Budget', 1);
+        $pdf->Cell(35, 10, 'Cout prev.', 1);
+        $pdf->Cell(35, 10, 'Cout reel', 1);
+        // $pdf->Cell(30, 10, 'Budget', 1);
         $pdf->Ln();
 
         $pdf->SetFont('Arial', '', 12);
@@ -66,7 +66,7 @@ class FanaController
             $pdf->Cell(30, 10, $data['nb_tickets'], 1, 0, 'C');
             $pdf->Cell(35, 10, number_format($data['cout_genere'], 2, ',', ' '), 1, 0, 'R');
             $pdf->Cell(35, 10, number_format($data['cout_genere_reel'], 2, ',', ' '), 1, 0, 'R');
-            $pdf->Cell(30, 10, number_format($data['budget'], 2, ',', ' '), 1, 0, 'R');
+            // $pdf->Cell(30, 10, number_format($data['budget'], 2, ',', ' '), 1, 0, 'R');
             $pdf->Ln();
         }
 
@@ -83,7 +83,7 @@ class FanaController
         $pdf = new \FPDF();
         $pdf->AddPage();
         $pdf->SetFont('Arial', 'B', 16);
-        $pdf->Cell(0, 10, 'Comparaison Dépense vs Budget par Ticket', 0, 1, 'C');
+        $pdf->Cell(0, 10, 'Comparaison Depense vs Budget par Ticket', 0, 1, 'C');
         $pdf->Ln(5);
 
         // En-tête du tableau
@@ -91,9 +91,9 @@ class FanaController
         $pdf->Cell(25, 10, 'Ticket', 1);
         $pdf->Cell(40, 10, 'Client', 1);
         $pdf->Cell(50, 10, 'Sujet', 1);
-        $pdf->Cell(30, 10, 'Dépense réelle', 1);
+        $pdf->Cell(30, 10, 'Depense reelle', 1);
         $pdf->Cell(30, 10, 'Budget', 1);
-        $pdf->Cell(30, 10, 'Écart réel', 1);
+        $pdf->Cell(30, 10, 'Ecart reel', 1);
         $pdf->Ln();
 
         $pdf->SetFont('Arial', '', 12);

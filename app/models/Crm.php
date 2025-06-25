@@ -126,5 +126,16 @@ class Crm {
     
         return $sommePrevision - $sommeRealisation;
     }
-    
+    public static function ajouterBudgetCrm($budget) {
+        $db = \Flight::db();
+        $stmt = $db->prepare("INSERT INTO budgetCRM (budget) VALUES (?)");
+        return $stmt->execute([$budget]);
+    }
+
+    public static function updateAllBudgetsCrm($budget) {
+        $db = \Flight::db();
+        $stmt = $db->prepare("UPDATE budgetCRM SET budget = ?");
+        return $stmt->execute([$budget]);
+    }
+
 }
